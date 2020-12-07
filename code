@@ -1,0 +1,131 @@
+from automata.fa.dfa import DFA
+dfa=DFA(
+    states={'q0','q1','q2','q3','q4','q5'},
+    input_symbols={'a','b'},
+    transitions={
+        'q0':{'a':'q1','b':'q1'},
+        'q1':{'a':'q2','b':'q2'},
+        'q2':{'a':'q3','b':'q3'},
+        'q3':{'a':'q5','b':'q4'},
+        'q4':{'a':'q5','b':'q4'},
+        'q5':{'a':'q5','b':'q5'},
+    },
+    initial_state='q0',final_states={'q5'}
+    
+)
+a ='a'
+b ='b'
+strInput=input()
+
+M= ""
+if (len(strInput)>7)and(len(strInput)<17):M=M+a ###長度
+else:
+    M=M+b
+    
+if len(strInput)<7:
+    print("長度過短")
+elif len(strInput)>17:
+    print("長度過長")
+   
+    
+k=0
+for i in  range(len(strInput)):
+    if ord(strInput[i])<58 and ord(strInput[i])>47: ###數字
+        k=1
+    
+        break;
+    else:
+        k=0
+if k==1:
+    M=M+a
+elif k==0 :
+    print("缺少數字")
+    M=M+b
+k=0
+for i in  range(len(strInput)):
+    if (ord(strInput[i])<47 and ord(strInput[i])>32):###特殊字元
+        k=1
+        break;
+    else:
+        k=0
+    if ord(strInput[i])>57 and ord(strInput[i])<65:
+        k=1
+        break;
+        k=0
+    if ord(strInput[i])>90 and ord(strInput[i])<97:
+        k=1
+        break;
+    else:
+        k=0
+    if ord(strInput[i])>122 and ord(strInput[i])<127:
+        k=1
+        break;
+    else:
+        k=0
+if k == 1:    
+    M=M+a
+
+elif k == 0:
+    print("缺少特殊字元")
+    M=M+b
+
+x=0
+k=0
+for i in  range(len(strInput)):    
+    if (ord(strInput[i])<91 and ord(strInput[i])>64)or(ord(strInput[i])<123 and ord(strInput[i])>96):
+        k=1
+        break;
+    else:
+        k=0
+if k==0:
+    x=1
+    print("缺少英文字母")
+    
+k=0
+for i in  range(len(strInput)):
+    if ord(strInput[i])<91 and ord(strInput[i])>64: ###英大
+        k=1
+        break;
+    else:
+        k=0
+if k==1:
+    M=M+a
+elif k==0 :
+    M=M+b
+    if x!=1:
+        print("缺少大寫英文")
+
+    
+for i in  range(len(strInput)):
+    if ord(strInput[i])<123 and ord(strInput[i])>96: ###英小
+        k=1
+        break;
+    else:
+        k=0
+if k==1:
+    M=M+a
+elif k==0 :
+    M=M+b
+    
+
+    
+k=0
+for i in range(len(strInput)-2):
+    if ((ord(strInput[i])<123 and ord(strInput[i])>96)or(ord(strInput[i])<91 and ord(strInput[i])>64)or(ord(strInput[i])<58 and ord(strInput[i])>47)):
+        if ((ord(strInput[i+1])==ord(strInput[i])+1)and(ord(strInput[i+2])==ord(strInput[i])+2)):
+            k=1
+            print("字母與數字不可連續")
+            break;
+        else:
+            k=0
+if k==1:
+    M=M+a
+elif k==0 :
+    M=M+b
+            
+m=dfa.read_input(M)
+print(M)
+if M=="aaaaab" or M=="aaaabb":
+    print("sucess")
+else:
+    print("fail")
