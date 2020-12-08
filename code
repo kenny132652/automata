@@ -124,7 +124,7 @@ elif k==0 :
     M=M+b
             
 m=dfa.read_input(M)
-print(M)
+
 if M=="aaaaab" or M=="aaaabb":
     print("sucess")
 else:
